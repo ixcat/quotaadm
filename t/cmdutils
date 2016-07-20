@@ -1,0 +1,36 @@
+#! /usr/bin/env perl
+
+package main;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib "$FindBin::Bin" . "/../lib";
+
+use Quota::Adm::User;
+use Quota::Adm::CommandUtils;
+
+my $u1 = Quota::Adm::User->fromLine("/etc u1 1234 5678 4321 8765");
+my $u2 = Quota::Adm::User->fromLine("/var u2 1234 5678 4321 8765");
+
+my $r;
+
+$r = Quota::Adm::CommandUtils::FormatString(
+	$Quota::Adm::CommandUtils::DefaultFormat,
+	$u1
+);
+print "r:\n$r\n";
+ 
+$r = Quota::Adm::CommandUtils::FormatString(
+	$Quota::Adm::CommandUtils::DefaultFormat,
+	$u2
+);
+print "r:\n$r\n";
+
+$r = Quota::Adm::CommandUtils::FormatString("ls -d %F", $u1);
+# Quota::Adm::CommandUtils::RunCmd($r)
+
+1;
+__DATA__
+

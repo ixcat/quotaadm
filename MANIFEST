@@ -1,0 +1,17 @@
+bin/quotaadm
+doc/examples/groupquota
+doc/examples/fsquota
+doc/examples/userquota
+doc/quotaadm.rst
+lib/Quota/Adm/Command/SetGroupQuota.pm
+lib/Quota/Adm/Command/SetFsGrace.pm
+lib/Quota/Adm/Command/SetUserQuota.pm
+lib/Quota/Adm/CommandUtils.pm
+lib/Quota/Adm/Command.pm
+lib/Quota/Adm/Filesystem.pm
+lib/Quota/Adm/Group.pm
+lib/Quota/Adm/User.pm
+lib/Quota/Adm.pm
+t/cmdutils
+MANIFEST
+Makefile.PL

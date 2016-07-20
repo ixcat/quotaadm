@@ -1,0 +1,30 @@
+#! /usr/bin/env perl
+
+package main;
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib "$FindBin::Bin" . "/../lib";
+
+use Quota::Adm::Command;
+
+use Quota::Adm::Command::SetFsGrace;
+use Quota::Adm::Command::SetUserQuota;
+use Quota::Adm::Command::SetGroupQuota;
+
+(my $me = $0) =~ s:.*/::;
+
+my $app = Quota::Adm::Command->new({
+	appname => $me,
+	cmdlist => [
+		'Quota::Adm::Command::SetFsGrace',
+		'Quota::Adm::Command::SetUserQuota',
+		'Quota::Adm::Command::SetGroupQuota'
+	]
+});
+
+exit $app->main(\@ARGV);
+
+1;
