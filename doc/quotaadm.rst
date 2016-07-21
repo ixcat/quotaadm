@@ -98,6 +98,7 @@ also given when the tool is run without arguments::
       - setfs [cfgpath] [fspath]
       - setuser [cfgpath] [user]
       - setgroup [cfgpath] [group]
+      - convert {user|group} fspath
 
 As can be seen from the synopsys, alternate configuration files can
 be used if so desired, and full help is available for each subcommand
