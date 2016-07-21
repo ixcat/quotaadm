@@ -13,6 +13,7 @@ use Quota::Adm::Command;
 use Quota::Adm::Command::SetFsGrace;
 use Quota::Adm::Command::SetUserQuota;
 use Quota::Adm::Command::SetGroupQuota;
+use Quota::Adm::Command::ConvertQuota;
 
 (my $me = $0) =~ s:.*/::;
 
@@ -21,7 +22,8 @@ my $app = Quota::Adm::Command->new({
 	cmdlist => [
 		'Quota::Adm::Command::SetFsGrace',
 		'Quota::Adm::Command::SetUserQuota',
-		'Quota::Adm::Command::SetGroupQuota'
+		'Quota::Adm::Command::SetGroupQuota',
+		'Quota::Adm::Command::ConvertQuota',
 	]
 });
 
