@@ -1,5 +1,8 @@
-
-
+# quota conversion package - 
+# converts repquota output to quotaadm input
+#
+# NOTE: currently Untested on OpenBSD
+#
 
 package Quota::Adm::Command::ConvertQuota;
 
@@ -100,92 +103,12 @@ sub do {
 		}
 	
 	}
+	close REPQUOTA;
 	return 0;
 }
 
 1;
 __DATA__
-
-
-
-#! /usr/bin/env perl
-
-use warnings;
-use strict;
-use YAML;
-
-# sub predecls
-sub usage_exit;
-
-# subs
-
-sub usage_exit {
-	our $app;
-	print "usage: $app ugarg fsarg\n";
-	exit 0;
-}
-
-# _start:
-(our $app = $0) =~ s:.*/::;
-
-my $ugarg = shift;
-my $fsarg = shift;
-
-usage_exit unless $ugarg && $fsarg;
-usage_exit unless ($ugarg eq '-g' or $ugarg eq '-u');
-
-my $repcmd;
-$repcmd = "repquota $ugarg -v $fsarg" if $^O eq 'linux';
-$repcmd = "repquota $ugarg $fsarg" if $^O eq 'openbsd';
-die "unsupported operating system $^O" unless $repcmd;
-
-open REPQUOTA, "$repcmd |" or die "couldn't spawn repquota(8): $!\n";
-
-my $meat = 0;
-
-print "# filesys\tlogname\tbsoft\tbhard\tisoft\tihard\n" if $ugarg eq '-u';
-print "# filesys\tgrname\tbhard\tisoft\tihard\n" if $ugarg eq '-g';
-
-while (my $line = <REPQUOTA>) {
-	chomp $line;
-	if(!$meat){
-		if($line =~ m:^-+$:) {
-			$meat = 1;
-			next;
-		}
-		next;
-	}
-	if($line =~ m:^$:) {
-		$meat = 0; 
-		next;
-	}
-	my $elms = [ split /\s+/, $line ];
-	${$elms}[0] =~ s:^#::; # id-only entry names prefixed with '#'
-
-	# the following if/else gymnastics occurs since the number of 
-        # non-whitespace data fields expands/contracts depending
-	# on whether or not a user is above/below quotas
-
-	if(${$elms}[1] =~ m:^\+:) { 		# above - #6 is bgrace
-		print "$fsarg "
-			. ${$elms}[0] . "\t"
-			. ${$elms}[3] . "\t"
-			. ${$elms}[4] . "\t"
-			. ${$elms}[7] . "\t"
-			. ${$elms}[8] . "\n";
-	}
-	else { 					# below - #6 is isoft
-		print "$fsarg "
-			. ${$elms}[0] . "\t"
-			. ${$elms}[3] . "\t"
-			. ${$elms}[4] . "\t"
-			. ${$elms}[6] . "\t"
-			. ${$elms}[7] . "\n";
-	}
-
-}
-
-1;
 # hacked uppish example for dbg purposes
 __DATA__
 
