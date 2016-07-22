@@ -62,12 +62,13 @@ sub fromLine {
 	my $line = shift;
 	my $ref = undef;
 
-	my $group_rx = '^((?:\w+|\W+|\d+|\/)*)'; # filesys
-	$group_rx .= '\s+((?:\w+|\d+)*)'; # group
-	$group_rx .= '\s+(\d+|[KkMmGgTt])'; # blksoft
-	$group_rx .= '\s+(\d+|[KkMmGgTt])'; # blkhard
-	$group_rx .= '\s+(\d+)'; # inosoft
-	$group_rx .= '\s+(\d+)'; # inohard
+	my $group_rx = '^(.*?)'			# filesys
+		. '\s+((?:\w+|\d+)*)'		# group
+		. '\s+(\d+(?:[KkMmGgTt]?))'	# bsoft
+		. '\s+(\d+(?:[KkMmGgTt]?))'	# bhard
+		. '\s+(\d+)'			# isoft
+		. '\s+(\d+)'			# ihard
+	;
 	
 	chomp $line;
 

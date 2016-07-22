@@ -29,7 +29,9 @@ sub new {
 	my $isoft = exists $args->{isoft} ? $args->{isoft} : undef;
 	my $ihard = exists $args->{ihard} ? $args->{ihard} : undef;
 
-	if(!($filesys && $user && $bsoft && $bhard && $isoft && $ihard)) {
+	if(!(defined($filesys) && defined($user)
+		&& defined($bsoft) && defined($bhard)
+		&& defined($isoft) && defined($ihard))) {
 		return undef;
 	}
 
@@ -58,12 +60,13 @@ sub fromLine {
 	my $line = shift;
 	my $ref = undef;
 
-	my $user_rx = '^((?:\w+|\W+|\d+|\/)*)'; # filesys
-	$user_rx .= '\s+((?:\w+|\d+)*)'; # user
-	$user_rx .= '\s+(\d+|[KkMmGgTt])'; # bsoft
-	$user_rx .= '\s+(\d+|[KkMmGgTt])'; # bhard
-	$user_rx .= '\s+(\d+)';	# isoft
-	$user_rx .= '\s+(\d+)'; # ihard
+	my $user_rx = '^(.*?)'			# filesys
+		. '\s+((?:\w+|\d+)*)'		# user
+		. '\s+(\d+(?:[KkMmGgTt]?))'     # bsoft  
+		. '\s+(\d+(?:[KkMmGgTt]?))'     # bhard  
+		. '\s+(\d+)'			# isoft
+		. '\s+(\d+)'			# ihard
+	;
 
 	chomp $line;
 

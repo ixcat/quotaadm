@@ -30,7 +30,9 @@ sub new {
 	my $gbgrace = exists $args->{gbgrace} ? $args->{gbgrace} : undef;
 	my $gigrace = exists $args->{gigrace} ? $args->{gigrace} : undef;
 
-	if(!($filesys && $ubgrace && $uigrace && $gbgrace && $gigrace)) {
+	if(!(defined($filesys) 
+		&& defined($ubgrace) && defined($uigrace)
+		&& defined($gbgrace) && defined($gbgrace))) {
 		return undef;
 	}
 
@@ -60,7 +62,14 @@ sub fromLine {
 
 	chomp $line; 
 
-	if ($line =~ m@^\s*((?:\w+|\/)*)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)@) {
+	my $fs_rx = '^(.*?)'			# filesys
+		. '\s+(\d+)'			# ubgrace
+		. '\s+(\d+)'			# uigrace
+		. '\s+(\d+)'			# gbgrace
+		. '\s+(\d+)'			# gigrace
+	;
+
+	if ($line =~ m@$fs_rx@) {
 		my $args = {
 			'filesys' => $1,
 			'ubgrace' => $2,
