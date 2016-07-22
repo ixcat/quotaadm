@@ -118,11 +118,12 @@ Block grace time: 7days; Inode grace time: 7days
 User            used    soft    hard  grace    used  soft  hard  grace
 ----------------------------------------------------------------------
 root	-- 2068872       0       0            445     0     0       
+dude	+- 28860164 15728640 31457280  5days   28354     0     0       
 #500	--    1424       0       0              3     0     0       
 
 Statistics:
 Total blocks: 8
 Data blocks: 1
-Entries: 2
+Entries: 3
 Used average: 5.000000
 
