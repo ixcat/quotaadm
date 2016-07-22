@@ -30,7 +30,9 @@ sub new {
 	my $isoft = exists $args->{isoft} ? $args->{isoft} : undef;
 	my $ihard = exists $args->{ihard} ? $args->{ihard} : undef;
 
-	if(!($filesys && $group && $bsoft && $bhard && $isoft && $ihard)) {
+	if(!(defined($filesys) && defined($group) 
+		&& defined($bsoft) && defined($bhard) 
+		&& defined($isoft) && defined($ihard))) {
 		return undef;
 	}
 
@@ -60,7 +62,7 @@ sub fromLine {
 	my $line = shift;
 	my $ref = undef;
 
-	my $group_rx = '^((?:\w+|\/)*)'; # filesys
+	my $group_rx = '^((?:\w+|\W+|\d+|\/)*)'; # filesys
 	$group_rx .= '\s+((?:\w+|\d+)*)'; # group
 	$group_rx .= '\s+(\d+|[KkMmGgTt])'; # blksoft
 	$group_rx .= '\s+(\d+|[KkMmGgTt])'; # blkhard

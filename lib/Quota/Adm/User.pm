@@ -58,7 +58,7 @@ sub fromLine {
 	my $line = shift;
 	my $ref = undef;
 
-	my $user_rx = '^((?:\w+|\/)*)'; # filesys
+	my $user_rx = '^((?:\w+|\W+|\d+|\/)*)'; # filesys
 	$user_rx .= '\s+((?:\w+|\d+)*)'; # user
 	$user_rx .= '\s+(\d+|[KkMmGgTt])'; # bsoft
 	$user_rx .= '\s+(\d+|[KkMmGgTt])'; # bhard
