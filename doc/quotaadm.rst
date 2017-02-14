@@ -68,6 +68,9 @@ To note, this functionality is not supported on OpenBSD since
 the underlying 'setquota' tool does not currently support this
 functionality.
 
+The quotaadm tool will default to using the file /etc/fsquota
+if no path is given to related subcommands.
+
 userquota configuration file example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -76,6 +79,9 @@ An example user quota configuraiton file is as follows::
   #filesys   logname blksoft  blkhard  inosoft inohard
   /usr/local chris   10485760 20971520 128000  256000
 
+The quotaadm tool will default to using the file /etc/userquota
+if no path is given to related subcommands.
+
 groupquota configuration file example
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -83,6 +89,9 @@ An example group quota configuraiton file is as follows::
 
   #filesys   grname blksoft  blkhard  inosoft inohard
   /usr/local staff  10485760 20971520 128000  256000
+
+The quotaadm tool will default to using the file /etc/groupquota
+if no path is given to related subcommands.
 
 Usage
 -----
