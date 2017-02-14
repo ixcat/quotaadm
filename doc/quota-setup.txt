@@ -1,0 +1,42 @@
+
+Quota Setup Notes
+=================
+
+Currently el7 only.. process is similar on OpenBSD
+
+# set usrquota,grpquota appropriately
+# or usrjquota=aquota.user,grpjquota=aquota.group,jqfmt=vfsv0
+$EDITOR /etc/fstab
+
+quotaoff -up /usr/home
+quotacheck -avugm
+mount -o remount,defaults,usrquota,noatime /usr/home
+quotaon -a
+quotaon -pua
+
+systemctl enable rpc-rquotad.service
+systemctl start rpc-rquotad.service
+
+repquota -ua     
+warnquota
+
+repquota -u /file/system
+User            used    soft    hard  grace    used  soft  hard  grace
+----------------------------------------------------------------------
+root      --  344532       0       0          14295     0     0       
+daemon    --      24       0       0              6     0     0       
+chris     -- 14365324 20000000 40000000          63682 128000 256000       
+#500      --     548       0       0             81     0     0       
+#502      --   10796       0       0            458     0     0       
+
+# configure default grace periods
+setquota -u -t $((3600 * 7 * 24)) $((3600 * 7 * 24)) /usr/home
+
+# will recompute grace timeouts when set
+# setquota -u logname bsoft bhard isoft ihard /path/to/filesystem
+setquota -u chris 20000000 40000000 128000 256000 /usr/home
+
+# example of forced grace bump
+setquota chris -T $((3600 * 7 * 24)) $((3600 * 7 * 24)) /usr/home
+
+Now, 'quotaadm convert' to generate quotaadm configuration files...
