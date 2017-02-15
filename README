@@ -1,0 +1,15 @@
+
+Quotaadm: Un*x filesystem quota managment toolkit in perl 
+
+Detailed documentation in doc/quotaadm.rst 
+
+installation:
+
+  perl Makefile.PL
+  make
+  make install
+
+usage:
+
+  quotaadm : run with no arguments for synopsys
+
